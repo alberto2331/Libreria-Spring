@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Semillero</title>
+	<!-- Bootstrap CSS -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!--Lo que sigue a continuacion lo comenté porque no me andaba el toggle del nav bar
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+	<!-- Css -->
+	<link rel="stylesheet" href="../static/indexcss.css" th:href="@{/static/indexcss.css}">
+	
+</head>
+<body class="bg-light" cz-shortcut-listen="true">
+									<!--Principio Navbar-->
+<!--aca implementamos el fragment-->
+<div th:replace="navbar::navbar">
+</div>
+									<!--Fin Navbar-->
+
+<div class="container mt-5">
+<p>To return to the main menu<a href="/"> HERE</a></p>
+<br>
+  <h2>List of authors</h2>            
+  <form class="needs-validation" action="/autor/consultaAutor" method="GET">
+			<div class="row g-3 mt-5">
+				<div class="col-sm-8">			
+					<label class="form-label" for="nombre">Enter the name of the author you want</label>
+					<input id="nombre" type="text" name="nombre" class="form-control">
+				</div>			
+				<div class="col-sm-2 pull right">
+					<button class="btn btn-success" type="submit" style="float:right;">Search
+				</div>
+			</div>			
+		</form>
+	
+  <table class="table table-dark table-hover mt-4">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Edit Author</th>
+        <th scope="col">Delet Author</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="autor : ${autores}">
+        <td th:text=${autor.id}></td>
+        <td th:text=${autor.nombre}></td>
+        <td><button class="btn btn-primary">Edit</button></td>
+        <td>
+        	<button class="btn btn-warning" sec:authorize="hasRole('ROLE_ADMIN')">
+        			<a th:href="@{/autor/eliminarBoton}+'?id='+${autor.id}">Delete</a></button>
+        	<!--<button><a th:href="@{/autor/eliminar/__${autor.id}__}" th:value="${autor.id}">prueba 2</button>-->
+
+        </td>                                
+      </tr>     
+	</tbody>
+  </table>
+</div>
+
+</body>
+</html>

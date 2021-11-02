@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="utf-8">
+	<title>Semillero</title>
+  <!--CSS-->
+	<link href="css/main.css" rel="stylesheet"/>
+  <!--/index.css" th:href="@{css/main.css}" href="css/main.css"  
+    /Users/saizg/Documents/workspace-spring-tool-suite-4-4.12.0.RELEASE/libreria/src/main/resources/static
+    th:href="@{/libreria/src/main/resources/static/index.css}"-->
+  <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-light" cz-shortcut-listen="true">
+									<!--Principio Navbar-->
+<!--aca implementamos el fragment-->
+<div th:replace="navbar::navbar">
+</div>
+									<!--Fin Navbar-->
+<div class="container">
+	<main></main>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
+	 th:fragment="navbar">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Library</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" sec:authorize="!isAuthenticated()" href="/login">Log in</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Log out</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" sec:authorize="!isAuthenticated()" href="/registro">Check in</a>
+    </li>
+
+    <!-- Dropdown: Libro -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle ml-4" href="#" id="navbardrop" data-toggle="dropdown">
+        Book
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/libro/libro">To register a book:</a>
+        <a class="dropdown-item" href="/libro/libroConsulta">Consult</a>
+        <a class="dropdown-item" href="/libro/buscarlibro">Add units</a>
+        <a class="dropdown-item" href="/libro/eliminarlibro">Delete book</a>
+      </div>
+    </li>
+    <!-- Dropdown: Autor -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Author
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/autor/autor">To register a author:</a>
+        <a class="dropdown-item" href="/autor/consulta">Consult</a>
+        <a class="dropdown-item" href="/autor/modificarAutor">Modify author name</a>
+        <a class="dropdown-item" href="/autor/eliminarAutor">Delete author</a>
+      </div>
+    </li>
+    <!-- Dropdown: Editorial -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Editorial
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/editorial/editorial">To register a editorial:</a>        
+      </div>
+    </li>
+	<!-- Dropdown: Cliente -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Client
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/cliente/registroCliente">To register a client:</a>
+      </div>
+    </li>
+    
+    <!-- Dropdown: Prestamos -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Loan
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/prestamo/prestamo">To register a loan:</a>
+      </div>
+    </li>
+  </ul>
+</nav>

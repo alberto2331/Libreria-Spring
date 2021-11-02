@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Semillero</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<!--Lo que sigue a continuacion lo comenté porque no me andaba el toggle del nav bar
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">-->
+
+	
+</head>
+<body class="bg-light" cz-shortcut-listen="true">
+									<!--Principio Navbar-->
+<!--aca implementamos el fragment-->
+<div th:replace="navbar::navbar">
+</div>
+									<!--Fin Navbar-->
+
+<div class="container mt-5">
+<p>To return to the main menu<a href="/"> HERE</a></p>
+</div>
+									
+<div class="container">
+	<main>
+	<form class="needs-validation" action="/autor/eliminar" method="POST">
+		<div class="row g-3 mt-5">
+			<div class="col-sm-8">			
+					<label class="form-label" for="id">Enter the ID of the author you want delete</label>
+					<input id="id" type="text" name="id" class="form-control">
+			</div>			
+			<div class="col-sm-2 pull right">
+					<button class="btn btn-success" type="submit" style="float:right;">Search
+			</div>
+		</div>			
+	</form>
+	<p th:text="${error}"></p>
+</div>
+</body>
+</html>
