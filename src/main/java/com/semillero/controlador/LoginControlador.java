@@ -21,7 +21,7 @@ public class LoginControlador {
 		if(username!=null) {
 			model.addAttribute("username", username);
 		}	
-		return "login";
+		return "login";	
 	}
 }
 
