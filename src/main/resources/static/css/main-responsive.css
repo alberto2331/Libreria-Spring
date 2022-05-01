@@ -1,0 +1,156 @@
+@media (max-width: 1250px){
+    
+    #presentation{
+        height: 250px;
+        margin: 20px 112px 11px 29px;        
+    }
+
+    #presentation #img1,
+    #presentation #img2{
+    display: none;    
+    }
+    
+    .middle #albert #description{
+        padding-right: 53%;
+    }
+}
+
+@media (max-width: 1250px){
+
+    .middle #albert #description{
+        padding-right: 43%;
+    }
+}
+
+
+@media (max-width: 1021px){
+    #presentation{
+        height: 250px;
+        margin: 6px 45px -5px -40px;
+    }
+
+    #wallpaper{
+        background-image: url("../img/thor2.jpg");
+        background-position: -200px -200px; /*-200px en x / -200px en y*/        
+        background-repeat: no-repeat;
+    
+        /*Animacion:*/
+        animation: backBanner 10s linear; /*Con esta animacion se va a mover */
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes backBanner {
+        0%{
+            background-position: 0px 0px;
+        }100%{
+            background-position: -200px -200px; /*-200px en x / -200px en y*/
+        }
+    }
+}
+
+@media (max-width: 889px){
+
+    #presentation #first-part{
+        margin-right: 10px;
+    }
+    #presentation #first-part,
+    #presentation #second-part{
+        font-size: 120px;
+        transform: skew(0deg, 0deg);
+    }
+
+    .middle #albert #description{
+        padding-right: 33%;
+    }
+}
+
+@media (max-width: 842px){
+    #presentation #first-part,
+    #presentation #second-part{
+        font-size: 120px;
+        transform: skew(0deg, 0deg);
+    }
+}
+
+@media (max-width: 767px){
+    #presentation #first-part,
+    #presentation #second-part{
+        font-size: 100px;
+        transform: skew(0deg, 0deg);
+        font-weight:lighter;        
+    }
+
+    .middle #albert #description{
+        padding-right: 23%;
+    }
+}
+
+@media (max-width: 711px){
+    #menu{
+        clear: both;
+        float:none;
+        width:440px;
+        margin: 0px auto;
+        height: 60px;   
+    }
+
+    #wallpaper{
+        display: none;
+    }
+    #wrap-name{
+    text-align: center;
+    margin-left: 0%;
+    margin: 0px 0px;
+    width: 100%;
+    background-color: black;
+    font-size: 35px;
+    padding: 15px -30px;
+    }
+}
+
+@media (max-width: 670px){
+ 
+    #main #administrator,
+    #main #user{
+        width: 80%;
+        padding: 10px;
+        float: none;
+        text-align: center;
+        margin: 5px;
+        margin-left: 30px;
+    }
+    #main{
+        height: 408px;       
+    }
+
+    .middle #albert #description{
+        padding-right: 10%;
+    }
+}
+
+@media (max-width: 616px){
+    .middle #albert {
+        width: 100%;
+    }
+    .middle #proyects{
+        width: 100%;
+        float: none;
+    }
+    .middle #albert #description{
+        padding-right: 50%;
+    }
+}
+
+@media (max-width: 486px){
+    
+
+    .middle #albert img{
+        display: none;
+    }
+}
+
+@media (max-width: 440px){
+    
+
+
+}

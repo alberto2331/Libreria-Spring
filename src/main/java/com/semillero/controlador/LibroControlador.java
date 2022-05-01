@@ -4,17 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.apache.tomcat.util.codec.binary.Base64;
 import com.semillero.entidades.Autor;
 import com.semillero.entidades.Editorial;
 import com.semillero.entidades.Libro;
+import com.semillero.entidades.Portada;
 import com.semillero.repositorio.AutorRepositorio;
 import com.semillero.repositorio.EditorialRepositorio;
 import com.semillero.repositorio.LibroRepositorio;
@@ -39,7 +46,14 @@ public class LibroControlador {
 	private EditorialRepositorio eR;
 	
 	@GetMapping("/libro")
-	public String registro(){
+	public String registro(
+			ModelMap modelo){
+		List<Autor> listaAutores = new ArrayList<>();
+		listaAutores = aR.findAll();
+		modelo.put("autores", listaAutores);
+		List<Editorial> listaEditoriales = new ArrayList<>();
+		listaEditoriales = eR.findAll();
+		modelo.put("editoriales", listaEditoriales);
 		return"libro.html";
 	}
 	//Esto es para consultar todos los libros de la base de datos:
@@ -47,7 +61,7 @@ public class LibroControlador {
 	public String consulta(
 			ModelMap modelo){		
 		List<Libro> libros =  libroServicio.buscarPorTitulo("");
-		modelo.put("libros", libros);
+		modelo.put("libros", libros);		
 		return"libro-consulta.html";
 	}
 	
@@ -56,15 +70,26 @@ public class LibroControlador {
 			@RequestParam Long isbn,
 			@RequestParam String titulo,
 			@RequestParam Integer anio,
-			@RequestParam Integer ejemplares){	
+			@RequestParam Integer ejemplares,
+			@RequestParam String autorId,
+			@RequestParam String editorialId,
+			@RequestParam MultipartFile portada){	
 	
-		libro.setIsbn(isbn);
-		libro.setTitulo(titulo);
-		libro.setAnio(anio);
-		libro.setEjemplares(ejemplares);
-		return "libro1.html";
+		libroServicio.guardar( isbn, titulo, anio, ejemplares, autorId, editorialId, portada);		
+		return "index";
 	}
 	
+	//El siguiente metodo es para conseguir la portada:
+	@GetMapping("/portada/{isbn}")
+    public String getPortadaByProducto(@PathVariable Long isbn) throws Exception {
+        Libro libro = libroServicio.encontrarPorId(isbn);
+        Portada portada = libro.getPortada();
+        String datosPortada = Base64.encodeBase64String(portada.getContenido());
+        return datosPortada;
+    }
+		
+	
+	//------------------------------------------------Autor:---------------------------------------
 	@GetMapping("/libroAutor")  //Esto es para buscar un autor
 	public String buscarAutor(
 			ModelMap modelo,
@@ -72,10 +97,10 @@ public class LibroControlador {
 			String nombre){
 		List<Autor> lista = new ArrayList<>();
 		if(nombre!=null) {		
-			lista = aR.buscarAutores("%"+nombre+"%");
+			lista = aR.findAll();
 		}
 		modelo.put("autores", lista);
-		return "libro1.html";
+		return "libro.html";
 	}
 	@PostMapping("/libro1")  //Esto es para cuando el autor NO existe en la base de datos
 	public String guardarAutor(
@@ -83,7 +108,7 @@ public class LibroControlador {
 		Autor autor = new Autor();
 		autor.setNombre(nombreAutor);
 		libro.setAutor(autor);
-		return "libro2.html";
+		return "libro.html";
 	}
 	@PostMapping("/libroAutor2") //Esto es para cuando el autor ya existe en la base de datos
 	public String setearAutor(
@@ -100,7 +125,7 @@ public class LibroControlador {
 			String nombreEditorial){
 		List<Editorial> lista = new ArrayList<>();
 		if(nombreEditorial!=null) {		
-			lista = eR.buscarEditorial("%"+nombreEditorial+"%");
+			lista = eR.findAll();
 		}
 		modelo.put("editoriales", lista);
 		return "libro2.html";		
@@ -111,77 +136,70 @@ public class LibroControlador {
 			@RequestParam String id){
 		Editorial editorial= eR.getById(id); 		
 		libro.setEditorial(editorial);
-		libroServicio.guardar(libro);
+		//libroServicio.guardar(libro);
 		return "index.html";
 	}
-	
+													
 	@PostMapping("/libro2")  //Esto es para cuando la editorial NO existe en la base de datos
 	public String guardarEditorial(
 			@RequestParam String nombreEditorial){
 		Editorial editorial = new Editorial();
 		editorial.setNombre(nombreEditorial);
 		libro.setEditorial(editorial);
-		libroServicio.guardar(libro);		
+		//libroServicio.guardar(libro);		
 		return "index.html";
 	}
 	
-	//----------------------------------------- Post para buscar un libro y agregar unidades ofrecidas del mismo:
+	//----------------------------------------- Editar Libro:
 	@GetMapping("/buscarlibro")
-	public String libroModificacion() {	
-		return"libro-modificacion.html";
-	}
-	
-	@GetMapping("/buscarlibroisbn")
-	public String modificarLibro(
-							ModelMap modelo,
-							Long isbn) {	
+	public String libroModificacion(
+			@RequestParam Long isbn,
+			ModelMap modelo) throws Exception {			
 		Optional<Libro> respuesta = libroRepo.findById(isbn);
 		if(respuesta.isPresent()) {			
 			libroModificar = libroRepo.getById(isbn);			
-			modelo.put("libroModificar", libroModificar);
+			modelo.put("libro", libroModificar);
+			
+			//Autores:
+			List<Autor> listaAutores = new ArrayList<>();
+			listaAutores = aR.findAll();
+			modelo.put("autores", listaAutores);
+			
+			//Editoriales:
+			List<Editorial> listaEditoriales = new ArrayList<>();
+			listaEditoriales = eR.findAll();
+			modelo.put("editoriales", listaEditoriales);
+			
+			//Metodo para obtener la portada:
+			modelo.addAttribute("datosPortada",getPortadaByProducto(libroModificar.getIsbn()));
 			return "libro-modificacion.html";
-		}	
+		}
 		return "libro-modificacion.html";
 	}
 	
-	@PostMapping("/unidadesAgregadas")
-	public String agregarLibros(							
-							Integer unidades) {	
-		Optional<Libro> respuesta = libroRepo.findById(libroModificar.getIsbn());
-		if(respuesta.isPresent()) {			
-			Libro libro1 = libroRepo.getById(libroModificar.getIsbn());
-			System.out.println("El Titulo "+ libro1.getTitulo());
-			libro1.setEjemplares(libro1.getEjemplares()+unidades);
-			System.out.println("La nueva cantidad del libro es de: "+libro1.getEjemplares());
-			libroRepo.save(libro1);
-			libro1=null;
-			return "libro-modificacion.html";
-		}	
-		return "libro-modificacion.html";
-	}	
-
-	//----------------------------------------- Post para eliminar un libro:
-
-	@GetMapping("/eliminarlibro")
-	public String libroEliminacion() {	
-		return"libro-eliminar.html";
+	@PostMapping("/modificar")
+	public String libroModificado(
+			@RequestParam(required = false) Long isbn,
+			@RequestParam(required = false) String titulo,
+			@RequestParam(required = false) Integer anio,
+			@RequestParam(required = false) Integer ejemplares,
+			@RequestParam(required = false) String autor,
+			@RequestParam(required = false) String editorial,
+			@RequestParam(required = false) MultipartFile portada) {
+						
+		libroServicio.modificar( isbn, titulo, anio, ejemplares, autor, editorial, portada);
+		return "index";
 	}
-	@PostMapping("/unidadeseliminar")
-	public String eliminarLibro(
-							ModelMap modelo,							
-							Long isbn) {	
-		Optional<Libro> respuesta = libroRepo.findById(isbn);
-		if(respuesta.isPresent()) {			
-			
-			Libro libro1 = libroRepo.getById(isbn);
-			System.out.println("El Titulo "+ libro1.getTitulo());				
-			String mensaje = "Book erased successfully";
-			libroRepo.delete(libro1);						
-			modelo.put("mensaje", mensaje);
-			return "libro-eliminar.html";
-		}	
-		String mensaje1 = "Wrong ISBN";
-		modelo.put("mensaje1", mensaje1);
-		return "libro-eliminar.html";
+	
+	//----------------------------------------- Post para eliminar un libro:
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@Transactional
+	@GetMapping("/eliminarLibro")
+	public String libroEliminacion(
+			@RequestParam Long isbn) {	
+		System.out.println("-------------------------------"+ isbn);
+		libroServicio.borrar(isbn);
+		return"index";
 	}	
 }

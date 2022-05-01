@@ -14,38 +14,42 @@
 	<link rel="stylesheet" href="../static/indexcss.css" th:href="@{/static/indexcss.css}">
 	
 </head>
-<body class="bg-light" cz-shortcut-listen="true">
+<body class="bg-light" cz-shortcut-listen="true" style="padding: 25px;">
 									<!--Principio Navbar-->
 <!--aca implementamos el fragment-->
 <div th:replace="navbar::navbar">
 </div>
 									<!--Fin Navbar-->
 
-<div class="container mt-5">
-<p>To return to the main menu<a href="/"> HERE</a></p>
-<br>
-  <h2>List of books</h2>            
-  <table class="table table-hover"  action="/libro/libroConsulta" method="GET">
-    <thead>
-      <tr>
-        <th>Isbn</th>
-        <th>Title</th>
-        <th>Ejemplares</th>
-        <th>Borrowed</th>
-        <th>Left to rent</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="libro : ${libros}">
-        <td th:text=${libro.isbn}></td>
-        <td th:text=${libro.titulo}></td>
-        <td th:text=${libro.ejemplares}></td>
-        <td th:text=${libro.prestados}></td>
-        <td th:text=${(libro.ejemplares-libro.prestados)}></td>                                
-      </tr>     
-	</tbody>
-  </table>
-</div>
-
+<!--Cards:-->
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+	  <div class="col" th:each="libro : ${libros}" style="margin-top: 20px;">
+	    <div class="card h-100">
+	      <img th:src="'/imagen/libro/'+*{libro.isbn}" class="card-img-top" alt="..."  style="width: 100%; height: 15vw; object-fit: cover;">
+	      <div class="card-body">
+	        <h5 class="card-title" th:text=${libro.titulo}></h5>
+	        <p class="card-text">Left to rent: <span th:text=${(libro.ejemplares-libro.prestados)}></spanth:text=${(libro.ejemplares-libro.prestados)}></p>
+	        <button type="button" class="btn btn-success">Detail</button>
+	        <button type="button" class="btn btn-success">Add</button>
+	        	<button type="button" class="btn btn-dark" sec:authorize="hasRole('ROLE_ADMIN')" th:value="${libro.isbn}"> 
+	        		<a th:href="@{/libro/buscarlibro}+'?isbn='+${libro.isbn}">Edit</a></button>
+	    		</button>
+	    		<button type="button" 
+	        		class="btn btn-danger"
+	        		sec:authorize="hasRole('ROLE_ADMIN')" 
+	        		th:value="${libro.isbn}"
+	        		click=agregar(hola)>
+	        		<a th:href="@{/libro/eliminarLibro}+'?isbn='+${libro.isbn}">Delete</a>
+				</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<script>
+		const saludo= agregar(constante);
+		
+	
+	</script>
+<!--Fin Cards-->
 </body>
 </html>

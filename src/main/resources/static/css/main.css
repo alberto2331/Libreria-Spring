@@ -1,11 +1,273 @@
-body{
-	padding: 20px 5px;
-	margin: 40px;
-	background-image: url(/imagen-main.jpg);
-	background-repeat: no-repeat;
-	background-size: cover;
+*{
+    margin: 0px;
+    padding: 0px;
 }
 
-main{
-	color:aliceblue;
+@font-face{
+    font-family: "WebSymbolsRegular";
+    src: url("fonts/websymbols-regular-webfont.eot");
+    src: url("fonts/websymbols-regular-webfont.eot?#iefix") format("embedded-opentype"),
+         url("fonts/websymbols-regular-webfont.woff") format("woff"),
+         url("fonts/websymbols-regular-webfont.ttf") format("truetype"),
+         url("fonts/websymbols-regular-webfont.svg#WebSymbolRegular") format("svg");    
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    background-color: #FDF3DE;
+    width: 100%;
+}
+
+#header{
+    width: 100%;
+    background-color: black;
+    height: 70px;
+    color: white;
+}
+
+#menu{
+    float: left;
+    height: 70px;
+    background-color: black;
+
+}
+
+#menu ul li {
+    display: inline-block; /*es similar a flotarlo a la derecha*/    
+    font-size: 24px;
+    margin: 0px 20px 0px 20px; /*margen de izq y de derecha/ arriba y abajo 0px*/
+    line-height: 70px;
+    letter-spacing: 1px;
+}
+
+#menu ul li a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    transition: all 300ms;
+    font-size: 15px;
+    font-family: 'Antonio', sans-serif;
+}
+
+#menu ul li a:hover{
+    color: #FFB828;
+    transform: scale(1.2, 1.2);/*Esto aumenta la escala en 1,2 veces de ancho y de alto SIN TOCAR LOS PADDINGS NI LOS MARGINS*/
+}
+
+#wrap-name{
+    display: block;
+    float: right;
+    width: 150px;
+    margin-top: 8px;
+    margin-left: 20%;
+    font-family: 'Antonio', sans-serif;
+    transition: all 300ms;
+    font-size: 35px;
+}
+
+#wrap-name:hover{
+    color: #FFB828;
+    transform: scale(1.1, 1.1);/*Esto aumenta la escala en 1,2 veces de ancho y de alto SIN TOCAR LOS PADDINGS NI LOS MARGINS*/
+    cursor: pointer;
+}
+
+#presentation{    
+    height: 550px;
+    margin: 20px 140px 40px 51px;
+}
+
+#presentation #first-part,
+#presentation #second-part{
+    font-size: 150px;
+    margin-left: 70px;
+    margin-right: 0px; 
+    display: inline-block;
+    margin-top: 20px;
+    font-family: 'Antonio', sans-serif;
+    text-shadow: -10px 5px 0px #FFB828;
+    font-weight: bolder;    
+    transform: skew(-8deg, -8deg);
+}
+
+#presentation #first-part{
+    padding: 10px;
+    margin: 0px 70px;
+    margin-bottom: 0px;    
+    width: 300px;    
+}
+
+#presentation #second-part{
+    float: right;
+    margin: 10px 8%;
+    margin-left: 10px;
+    margin-right: 120px;
+    padding-left: 0px;
+}
+
+#presentation #img1{
+    margin-left: 100px;
+    margin-right: 20px;
+    margin-top:30px;     
+    display: block;
+    float: left;
+    
+}
+
+#presentation #img2{
+    margin-left: 100px;
+    margin-right: 20px;
+    margin-top: 10px;
+    
+    display: block;
+    float: right;
+}
+
+.clearfix{
+    float: none;
+    clear: both;
+}
+
+.middle #proyects{
+    float: left;
+    color: #FFB828;
+    font-family: 'Antonio', sans-serif;
+    font-size: 25px;
+    display: block;
+    width: 50%;
+    height: 100px;
+    background-color: black;
+    
+    line-height: 100px;
+}
+
+#proyects #gear{
+    display: block;
+    float:left;
+    font-size: 30px;
+    margin-top: 8px;
+    margin-left: 26px;
+    margin-right: 12px;
+    font-family: WebSymbolsRegular;        
+    animation-name: rotate-gear ;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; /*No acelera ni desacelera*/
+}
+
+@keyframes rotate-gear {
+    from{
+        transform: rotateZ(0deg);
+    }to{
+        transform: rotateZ(360deg);
+    }
+}
+
+#proyects #other{
+    display: block;
+    float:inline-start;
+    margin: 0px auto;
+}
+
+.middle #albert{
+    float: right;    
+    width: 50%;
+    display: block;
+    height: 100px;
+    background-color: #FFB828;
+}
+
+.middle #albert #profile {
+    float: left;   
+}
+
+.middle #albert #profile img{
+    border-radius: 40px;
+    height: 100px;
+    margin-left: 10px;
+}
+
+.middle #albert #description{
+    float: right;
+    color: orange;    
+    color: black;
+    padding-right: 59%;
+    margin-top: 30px;
+    font-family: 'Antonio', sans-serif;
+    font-size: 25px;
+}
+
+#wallpaper{
+    background-image: url("../img/captain-america.jpg");    
+    width: 100%;    
+    height: 500px;
+    background-size: 130% 700px;
+    overflow: hidden; 
+    /*Animacion:*/
+    animation: backBanner 10s linear; /*Con esta animacion se va a mover */
+    animation-iteration-count: infinite;
+}
+
+@keyframes backBanner {
+    0%{
+        background-position: 0px 0px;
+    }100%{
+        background-position: -200px -200px; /*-200px en x / -200px en y*/
+    }
+}
+
+#main{
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #ccc;
+    border-radius: 5px;
+    min-height: 250px;
+    border-radius: 10px;
+}
+
+#main #explanation{        
+    font-family: 'Antonio', sans-serif;
+    padding-bottom: 10px;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 20px;
+    margin-bottom: 6px;
+    font-size: 25px;
+    background-color: #FFB828;    
+    text-align: center;
+}
+
+#main #user{
+    float: left;
+    border-radius: 100px;
+    padding: 10px;
+    height: 150px;
+    font-family: 'Antonio', sans-serif;
+    text-align: center; 
+    font-size: 20px;
+    background-color: #F76A32;
+    width: 48%;
+}
+
+#main #user ul li{
+    list-style: none;
+    margin: 5px;
+}
+
+#main #administrator{
+    float: right;
+    border-radius: 100px;
+    padding: 10px;
+    height: 150px;
+    font-family: 'Antonio', sans-serif;
+    font-size: 20px;
+    text-align: center; 
+    background-color: #F76A32;
+    width: 45%;
+    display: block;
+}
+
+#main #administrator ul li{
+    list-style: none;
+    margin: 5px;
 }

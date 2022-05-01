@@ -10,7 +10,7 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
 </head>
-<body class="bg-light" cz shortcut-list="true">
+<body class="bg-light" cz shortcut-list="true" style="padding: 25px;">
 										<!--Principio Navbar-->
 <!--aca implementamos el fragment-->
 <div th:replace="navbar::navbar">
@@ -24,7 +24,7 @@
 			<hr/>
 	</div>
 
-	<form class="needs-validation" action="/libro/libro" method="POST">
+	<form class="needs-validation" action="/libro/libro" method="POST" enctype="multipart/form-data">
 		<div class="row g-4">
 			<div class="col-sm-6">
 				<label class="form-label" for="isbn">ISBN</label>
@@ -42,6 +42,44 @@
 				<label class="form-label" for="ejemplares">Quantity</label>
 				<input id="ejemplares" type="number" name="ejemplares" class="form-control">
 			</div>
+			<!--Autor-->
+			<div class="mb-3">
+              <label class="form-label">Enter the author of the book you want</label>
+          		<select class="form-select" aria-label="Default select example" name="autorId">
+        				<option th:each="autor :${autores}" th:value="${autor.id}" th:text="${autor.nombre}"></option>
+    	    	</select >
+			</div>
+			<!--Fin Autor-->
+			<!--Editorial-->
+			<div class="mb-3">
+              <label class="form-label">Enter the editorial of the book you want</label>
+          		<select class="form-select" aria-label="Default select example" name="editorialId">
+        				<option th:each="editorial :${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}"></option>
+    	    	</select >
+			</div>
+			<!--Fin Editorial-->
+			
+			<!-------------------------Portada----------------------------------------------------------->
+			<div class="mb-3">
+                <label class="form-label" for="portada">Portada</label>
+                <input id="archivo" type="file" name="portada" class="form-control"
+                    accept="image/png, .jpeg, .jpg, image/gif" onchange="loadFile(event)">
+                <img id="output" style="visibility: hidden" src="#" alt="your image" />
+                <script>
+                    var loadFile = function (event) {
+                        var output = document.getElementById('output');
+                        output.src = URL.createObjectURL(event.target.files[0]);
+                        output.style.width = '200px';
+                        output.style.visibility = 'visible';
+                        output.style.heigth = 'auto';
+                        output.classList.add('my-2');
+                        output.onload = function () {
+                            URL.revokeObjectURL(output.src) // free memory
+                        }
+                    };
+                </script>
+            </div>
+            <!-------------------------------------Fin portada-------------------------------------->
 			<div class="col-sm-12 pull right">
 				<button class="btn btn-success" type="submit" style="float:right;">Next
 			</div>			

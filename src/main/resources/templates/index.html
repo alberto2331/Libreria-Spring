@@ -1,27 +1,142 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title>Semillero</title>
-  <!--CSS-->
-	<link href="css/main.css" rel="stylesheet"/>
-  <!--/index.css" th:href="@{css/main.css}" href="css/main.css"  
-    /Users/saizg/Documents/workspace-spring-tool-suite-4-4.12.0.RELEASE/libreria/src/main/resources/static
-    th:href="@{/libreria/src/main/resources/static/index.css}"-->
-  <!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+
+	<!--Inicio Fuentes-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@200&family=Permanent+Marker&display=swap"
+		rel="stylesheet">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Archivo:wght@200&family=Permanent+Marker&display=swap"
+		rel="stylesheet">
+	<!--Fin Fuentes-->
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="img/america.png">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/main-responsive.css">
+	<title>Comic App</title>
+
+	<!--Movimiento suavizado-->
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"
+	type="text/javascript" charset="utf-8"></script>
+
+	<script>
+		$(function () {
+			$('a[href*="#"]:not([href="#"])').click(function () {
+				if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+					var target = $(this.hash);
+					target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+					if (target.length) {
+						$('html, body').animate({
+							scrollTop: target.offset().top
+						}, 10000);
+						return false;
+					}
+				}
+			});
+		});		
+	</script>
+	<!--Fin Movimiento suavizado-->
 </head>
-<body class="bg-light" cz-shortcut-listen="true">
-									<!--Principio Navbar-->
-<!--aca implementamos el fragment-->
-<div th:replace="navbar::navbar">
-</div>
-									<!--Fin Navbar-->
-<div class="container">
-	<main></main>
-</div>
+
+<body>
+	<!--Inicio de cabecera:-->
+	<header id="header">
+		<div class="wrap">
+			<nav id="menu">
+				<ul>
+					<li><a href="#1">Login</a></li>
+					<li><a href="#1">CheckIn</a></li>
+					<li><a href="#explanation" onpagehide>What can you do with this app</a></li>
+				</ul>
+			</nav>
+			<div id="wrap-name">
+				HOME
+			</div>
+		</div>
+	</header>
+
+	<div id="presentation">
+
+		<span id="first-part">
+			COMIC
+		</span>
+
+		<span id="img2">
+			<img src="captura2.png" alt="">
+		</span>
+
+		<span id="img1">
+			<img src="captura1.png" alt="">
+		</span>
+		<span id="second-part">
+			BOOK
+		</span>
+	</div>
+	<!--float cleaning-->
+	<div class="clearfix"></div>
+	<!--Endfloat cleaning-->
+	<div class="middle">
+		<span id="proyects">
+			<span id="gear">S</span>
+			<span id="other">See Other projects</span>
+		</span>
+		<span id="albert">
+			<div id="profile">
+				<img src="Foto CV.PNG" alt="profile">
+			</div>
+			<div id="description">
+				Go to LinkedIn
+			</div>
+		</span>
+	</div>
+	<!--float cleaning-->
+	<div class="clearfix"></div>
+	<!--Endfloat cleaning-->
+
+	<div id="wallpaper">
+	
+	</div>
+
+	<!--Description of the functionalities of the app-->
+	<div id="main">
+		<div id="explanation">
+			What can i do with this application:
+		</div>
+
+		<div id="user">
+			<ul>
+				<u>As user you can:</u>
+				<li>watch comics</li>
+				<li>see authors</li>
+				<li>see editorials</li>
+				<li>buy comics</li>
+			</ul>
+		</div>
+		<div id="administrator">
+			<ul>
+				<u>As administrator you can CRUD:</u>
+				<li>comics</li>
+				<li>authors</li>
+				<li>publishers</li>
+				<li>clients</li>
+			</ul>
+		</div>
+	</div>
+
+	<!--End Description of the functionalities of the app-->
+
+
 </body>
+
 </html>
